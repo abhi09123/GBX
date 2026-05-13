@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GBX Platform</title>
+  <style>
+    :root {
+      --bg: #f8f8f7;
+      --ink: #070707;
+      --muted: rgba(7, 7, 7, 0.56);
+      --faint: rgba(7, 7, 7, 0.08);
+      --line: rgba(7, 7, 7, 0.12);
+      --success: #43e617;
+      --teal: #14b8a6;
+      --indigo: #6366f1;
+      --rose: #f43f5e;
+      --amber: #f59e0b;
+      --blue: #3b82f6;
+      --surface: rgba(255, 255, 255, 0.78);
+      --shadow: 0 10px 18px rgba(0, 0, 0, 0.075), 0 2px 5px rgba(0, 0, 0, 0.045);
+      --radius: 8px;
+      font-family: Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      letter-spacing: 0;
+      overflow-x: hidden;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 800ms ease, transform 1000ms cubic-bezier(.19,1,.22,1);
+    }
+
+    [data-reveal].is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    [data-reveal-stagger] > * {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 600ms ease, transform 800ms cubic-bezier(.19,1,.22,1);
+    }
+
+    [data-reveal-stagger].is-revealed > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .is-revealed > *:nth-child(1) { transition-delay: 50ms; }
+    .is-revealed > *:nth-child(2) { transition-delay: 150ms; }
+    .is-revealed > *:nth-child(3) { transition-delay: 250ms; }
+    .is-revealed > *:nth-child(4) { transition-delay: 350ms; }
+    .is-revealed > *:nth-child(5) { transition-delay: 450ms; }
+    .is-revealed > *:nth-child(6) { transition-delay: 550ms; }
+    .is-revealed > *:nth-child(7) { transition-delay: 650ms; }
+    .is-revealed > *:nth-child(8) { transition-delay: 750ms; }
+    .is-revealed > *:nth-child(9) { transition-delay: 850ms; }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 64px;
+      padding: 0 10vw;
+      border-bottom: 1px solid rgba(7, 7, 7, 0.10);
+      background: rgba(248, 248, 247, 0.82);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .brand-mark {
+      width: 22px;
+      height: 22px;
+      border: 1px solid rgba(7, 7, 7, 0.18);
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+    }
+
+    .brand-mark::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border: 1px solid rgba(7, 7, 7, 0.72);
+      transform: rotate(45deg);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+      color: rgba(7, 7, 7, 0.62);
+    }
+
+    .nav-links a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .button-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px;
+      border: 1px solid rgba(7, 7, 7, 0.14);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #fff, #f5f5f4);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+      color: rgba(7, 7, 7, 0.86);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(7, 7, 7, 0.22);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.075), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    }
+
+    .btn.primary {
+      background: #070707;
+      color: #fff;
+      border-color: #070707;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
+    }
+
+    .hero {
+      min-height: auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(420px, 0.95fr);
+      align-items: center;
+      gap: 32px;
+      padding: 48px 10vw 32px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-copy h1 {
+      max-width: 820px;
+      margin: 0;
+      font-size: clamp(48px, 6.2vw, 86px);
+      line-height: 0.96;
+      font-weight: 500;
+    }
+
+    .hero-copy h1 span {
+      color: var(--success);
+    }
+
+    .hero-copy p {
+      max-width: 760px;
+      margin: 26px 0 0;
+      color: rgba(7, 7, 7, 0.68);
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .hero .button-row {
+      margin-top: 34px;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 480px;
+      display: grid;
+      place-items: center;
+      margin-top: -40px;
+    }
+
+    .connection-stage {
+      position: relative;
+      width: 600px;
+      height: 500px;
+      display: grid;
+      place-items: center;
+    }
+
+    .platform-core {
+      position: relative;
+      z-index: 10;
+      width: 140px;
+      height: 140px;
+      background: #fff;
+      border: 1px solid rgba(7, 7, 7, 0.12);
+      border-radius: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.12), 0 0 30px rgba(0,0,0,0.05);
+      animation: corePulse 4s ease-in-out infinite;
+    }
+
+    @keyframes corePulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 20px 50px rgba(0,0,0,0.12), 0 0 30px rgba(0,0,0,0.05); }
+      50% { transform: scale(1.03); box-shadow: 0 25px 60px rgba(0,0,0,0.18), 0 0 50px rgba(0,0,0,0.1); }
+    }
+
+    .core-icon {
+      width: 32px;
+      height: 32px;
+      color: var(--ink);
+    }
+
+    .core-label {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .service-node {
+      position: absolute;
+      z-index: 5;
+      padding: 10px 18px;
+      background: #fff;
+      border: 1px solid rgba(7, 7, 7, 0.08);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .node-1 { top: 0; left: 50%; transform: translateX(-50%); }
+    .node-2 { top: 20%; right: 0; }
+    .node-3 { bottom: 20%; right: 0; }
+    .node-4 { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .node-5 { bottom: 20%; left: 0; }
+    .node-6 { top: 20%; left: 0; }
+
+    .node-1 .check { background: var(--teal); border-color: var(--teal); }
+    .node-2 .check { background: var(--indigo); border-color: var(--indigo); }
+    .node-3 .check { background: var(--rose); border-color: var(--rose); }
+    .node-4 .check { background: var(--amber); border-color: var(--amber); }
+    .node-5 .check { background: var(--blue); border-color: var(--blue); }
+    .node-6 .check { background: var(--success); border-color: var(--success); }
+
+    .service-node .check {
+      color: #fff;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 14px;
+    }
+
+    .connection-svg {
+      position: absolute;
+      inset: -50px;
+      width: calc(100% + 100px);
+      height: calc(100% + 100px);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .conn-path {
+      fill: none;
+      stroke: rgba(7, 7, 7, 0.06);
+      stroke-width: 1.5;
+      stroke-dasharray: 4 4;
+    }
+
+    .pulse-path {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-dasharray: 20 100;
+      stroke-dashoffset: 120;
+      animation: dataFlow 3s linear infinite;
+      opacity: 0.35;
+    }
+
+    @keyframes dataFlow {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .page-section {
+      padding: 54px 10vw;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 96px minmax(0, 1fr);
+      gap: 48px;
+      align-items: start;
+    }
+
+    .section-kicker {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+      color: rgba(7, 7, 7, 0.44);
+    }
+
+    .section-heading {
+      margin: 0;
+      font-size: clamp(34px, 4.2vw, 58px);
+      line-height: 1;
+      font-weight: 500;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid rgba(7, 7, 7, 0.10);
+      border-left: 1px solid rgba(7, 7, 7, 0.10);
+      margin-top: 24px;
+    }
+
+    .info-card {
+      min-height: 190px;
+      padding: 32px 26px;
+      border-right: 1px solid rgba(7, 7, 7, 0.10);
+      border-bottom: 1px solid rgba(7, 7, 7, 0.10);
+      background: rgba(255, 255, 255, 0.28);
+      transition: background 400ms ease, transform 400ms cubic-bezier(.19,1,.22,1);
+    }
+
+    .info-card:hover {
+      background: #fff;
+      transform: translateY(-4px);
+    }
+
+    .info-card-icon {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 20px;
+      color: var(--ink);
+    }
+
+    .info-card h3 {
+      margin: 0 0 12px;
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: rgba(7, 7, 7, 0.60);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .video-container {
+      margin-top: 12px;
+      width: 100%;
+      min-height: 520px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      background: #fbfbfb;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      transition: all 800ms ease;
+    }
+
+    .video-container.wow-mode {
+      background: #fdfdfd;
+      border-color: rgba(67, 230, 23, 0.4);
+      box-shadow: inset 0 0 50px rgba(67, 230, 23, 0.05);
+    }
+
+    /* Technical Flux Grid */
+    .flux-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: center;
+      opacity: 0.4;
+      z-index: 1;
+    }
+
+    .wow-mode .flux-grid {
+      opacity: 0.8;
+      background-image: 
+        linear-gradient(rgba(67, 230, 23, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(67, 230, 23, 0.15) 1px, transparent 1px);
+    }
+
+    .flux-line {
+      position: absolute;
+      background: linear-gradient(90deg, transparent, var(--success), transparent);
+      height: 1px;
+      width: 150px;
+      opacity: 0;
+      z-index: 2;
+    }
+
+    .flux-line.v {
+      width: 1px;
+      height: 150px;
+      background: linear-gradient(180deg, transparent, var(--success), transparent);
+    }
+
+    .wow-mode .flux-line {
+      opacity: 0.6;
+      animation: fluxMove 3s linear infinite;
+    }
+
+    @keyframes fluxMove {
+      0% { transform: translate(-100%, -100%); }
+      100% { transform: translate(500%, 500%); }
+    }
+
+    .scanline {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent, rgba(67, 230, 23, 0.03) 50%, transparent);
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0;
+    }
+
+    .wow-mode .scanline {
+      opacity: 1;
+      animation: scan 8s linear infinite;
+    }
+
+    @keyframes scan {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(100%); }
+    }
+
+    .transformation-flash {
+      position: absolute;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .transformation-flash.active {
+      animation: flashEffect 800ms ease-out forwards;
+    }
+
+    @keyframes flashEffect {
+      0% { opacity: 0.8; }
+      100% { opacity: 0; }
+    }
+
+    .system-status {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      opacity: 0;
+      transform: translateX(10px);
+      transition: all 600ms ease;
+      z-index: 10;
+    }
+
+    .wow-mode .system-status {
+      opacity: 1;
+      transform: translateX(0);
+      color: var(--success);
+    }
+
+    .status-pulse {
+      width: 6px;
+      height: 6px;
+      background: currentColor;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(67, 230, 23, 0.1);
+      animation: statusBlink 1s infinite;
+    }
+
+    @keyframes statusBlink {
+      50% { opacity: 0.4; }
+    }
+
+    .timeline-rail {
+      position: absolute;
+      bottom: 40px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: rgba(7, 7, 7, 0.08);
+      z-index: 5;
+    }
+
+    .timeline-progress {
+      position: absolute;
+      top: -1px;
+      left: 0;
+      height: 3px;
+      background: var(--success);
+      width: 0%;
+      box-shadow: 0 0 15px var(--success);
+      transition: width 100ms linear;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      top: -4px;
+      right: -5px;
+      width: 10px;
+      height: 10px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--success), 0 0 40px var(--success);
+    }
+
+    .timeline-labels {
+      position: absolute;
+      bottom: 12px;
+      left: 10%;
+      right: 10%;
+      display: flex;
+      justify-content: space-between;
+      z-index: 5;
+    }
+
+    .timeline-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(7, 7, 7, 0.3);
+      transition: color 300ms ease, transform 300ms ease;
+    }
+
+    .timeline-label.is-active {
+      color: var(--ink);
+      font-weight: 600;
+      transform: translateY(-2px);
+    }
+
+    #journey-canvas {
+      width: 100%;
+      max-width: 1100px;
+      height: auto;
+      display: block;
+      position: relative;
+      z-index: 3;
+    }
+
+    .loader-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: opacity 600ms ease;
+    }
+
+    .loader-bar {
+      width: 200px;
+      height: 2px;
+      background: var(--line);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .loader-progress {
+      width: 0%;
+      height: 100%;
+      background: var(--success);
+      transition: width 200ms ease;
+    }
+
+    .user-cloud,
+    .metric-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 34px;
+    }
+
+    .chip {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(7, 7, 7, 0.12);
+      border-radius: 8px;
+      padding: 0 13px;
+      background: linear-gradient(180deg, #fff, #f7f7f6);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.045);
+      font-size: 14px;
+      color: rgba(7, 7, 7, 0.72);
+    }
+
+    .cta-band {
+      padding: 106px 10vw;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cta-band h2 {
+      margin: 0 auto;
+      max-width: 820px;
+      font-size: clamp(38px, 5vw, 68px);
+      line-height: 0.98;
+      font-weight: 500;
+    }
+
+    .cta-band p {
+      max-width: 760px;
+      margin: 22px auto 0;
+      color: rgba(7, 7, 7, 0.66);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .footer {
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 0 10vw;
+      color: rgba(7, 7, 7, 0.58);
+      font-size: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .hero, .section-grid { grid-template-columns: 1fr; }
+      .hero { padding: 54px 22px; min-height: auto; }
+      .page-section, .cta-band, .footer { padding: 48px 22px; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="brand"><span class="brand-mark"></span>GBX Platform</div>
+    <div class="nav-links">
+      <a href="#journey">Journey</a>
+      <a href="#features">Features</a>
+      <a href="#users">Users</a>
+    </div>
+    <div class="button-row">
+      <a class="btn primary" href="#demo">Book a Demo</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-copy" data-reveal>
+      <h1><span>One Platform</span> Connecting Customers, Brokers, Lenders &amp; Investors</h1>
+      <p>A unified digital platform connecting brokers, lenders, legal teams, surveyors, servicing providers, receivers and investors, enabling faster transactions, operational efficiency, and real-time collaboration across the property finance lifecycle.</p>
+      <div class="button-row">
+        <a class="btn primary" href="#demo">Book a Demo</a>
+        <a class="btn" href="#journey">Explore</a>
+      </div>
+    </div>
+    <div class="hero-visual" data-reveal style="transition-delay: 300ms;">
+      <div class="connection-stage">
+        <svg class="connection-svg" viewBox="0 0 600 500">
+          <path class="conn-path" d="M300 250 L300 60" /><path class="conn-path" d="M300 250 L520 120" /><path class="conn-path" d="M300 250 L520 380" /><path class="conn-path" d="M300 250 L300 440" /><path class="conn-path" d="M300 250 L80 380" /><path class="conn-path" d="M300 250 L80 120" />
+          <path class="pulse-path" d="M300 250 L300 60" /><path class="pulse-path" d="M300 250 L520 120" /><path class="pulse-path" d="M300 250 L520 380" /><path class="pulse-path" d="M300 250 L300 440" /><path class="pulse-path" d="M300 250 L80 380" /><path class="pulse-path" d="M300 250 L80 120" />
+        </svg>
+        <div class="platform-core">
+          <svg class="core-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 7v10l8 5 8-5V7l-8-5z" stroke="currentColor" stroke-width="2"/><path d="M12 22V12M20 7l-8 5-8-5" stroke="currentColor" stroke-width="2"/></svg>
+          <div class="core-label">Platform</div>
+        </div>
+        <div class="service-node node-1"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Software Providers</div>
+        <div class="service-node node-2"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Servicing</div>
+        <div class="service-node node-3"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Legals</div>
+        <div class="service-node node-4"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Receivers</div>
+        <div class="service-node node-5"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Surveyors</div>
+        <div class="service-node node-6"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Auctioneers</div>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-section" id="journey">
+    <div class="section-grid">
+      <div class="section-kicker" data-reveal>Journey</div>
+      <div>
+        <h2 class="section-heading" data-reveal>Built Around the Entire Lending Journey</h2>
+        <div class="video-container" id="journey-trigger">
+          <div class="loader-overlay" id="journey-loader">
+            <div style="font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;">Analyzing Infrastructure</div>
+            <div class="loader-bar"><div class="loader-progress" id="loader-fill"></div></div>
+          </div>
+          
+          <div class="flux-grid"></div>
+          <div class="scanline"></div>
+          
+          <!-- Animated Flux Lines -->
+          <div class="flux-line" style="top: 20%; left: -10%; animation-delay: 0s;"></div>
+          <div class="flux-line" style="top: 60%; left: -10%; animation-delay: 2s;"></div>
+          <div class="flux-line v" style="left: 30%; top: -10%; animation-delay: 1s;"></div>
+          <div class="flux-line v" style="left: 70%; top: -10%; animation-delay: 3s;"></div>
+
+          <div class="transformation-flash" id="trans-flash"></div>
+          
+          <div class="system-status">
+            <div class="status-pulse"></div>
+            Platform Active
+          </div>
+          
+          <div class="timeline-rail">
+            <div class="timeline-progress" id="progress-bar">
+              <div class="timeline-dot"></div>
+            </div>
+          </div>
+          
+          <div class="timeline-labels">
+            <span class="timeline-label" id="label-1">Manual Coordination</span>
+            <span class="timeline-label" id="label-2">Data Fragmented</span>
+            <span class="timeline-label" id="label-3">Operational Scale</span>
+          </div>
+
+          <canvas id="journey-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" id="features">
+    <div class="section-grid">
+      <div class="section-kicker" data-reveal>Features</div>
+      <div>
+        <h2 class="section-heading" data-reveal>Everything Connected in One Platform</h2>
+        <div class="card-grid" data-reveal-stagger>
+          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg></div><h3>Unified Workflow Management</h3><p>Bring every stage of the lending lifecycle into a single operational environment.</p></article>
+          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Real-Time Collaboration</h3><p>Keep brokers, providers, and investors aligned with centralized communication and live updates.</p></article>
+          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h3>Intelligent Automation</h3><p>Reduce manual processes and accelerate transactions with automated workflows.</p></article>
+          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Secure Infrastructure</h3><p>Enterprise-grade security and controlled access across all stakeholders.</p></article>
+          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><h3>Scalable Architecture</h3><p>Built to support growing transaction volumes and expanding partner networks.</p></article>
+          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z"/></svg></div><h3>Data &amp; Reporting</h3><p>Gain operational visibility with centralized analytics and reporting.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" id="users">
+    <div class="section-grid">
+      <div class="section-kicker" data-reveal>Users</div>
+      <div>
+        <h2 class="section-heading" data-reveal>Who Uses the Platform</h2>
+        <div class="user-cloud" data-reveal-stagger>
+          <span class="chip">Customers</span><span class="chip">Brokers</span><span class="chip">Lenders</span><span class="chip">Legal Firms</span><span class="chip">Surveyors</span><span class="chip">Servicing Teams</span><span class="chip">Receivers</span><span class="chip">Auctioneers</span><span class="chip">Investors</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band" id="demo">
+    <h2 data-reveal>Transform Your Lending Operations</h2>
+    <p data-reveal>Discover how a connected infrastructure platform can modernize workflows and streamline collaboration.</p>
+    <div class="button-row" data-reveal>
+      <a class="btn primary" href="mailto:hello@example.com">Book a Demo</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="brand"><span class="brand-mark"></span>GBX Platform</div>
+    <p>© 2026 GBX Platform. UK Property Infrastructure.</p>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('journey-canvas');
+    const context = canvas.getContext('2d');
+    const trigger = document.getElementById('journey-trigger');
+    const loader = document.getElementById('journey-loader');
+    const loaderFill = document.getElementById('loader-fill');
+    
+    const frameCount = 770; // 1000 to 1769
+    const startFrame = 1000;
+    
+    const currentFrame = index => (
+      `./png/Final_${index.toString().padStart(4, '0')}.png`
+    );
+
+    const images = [];
+    const sequence = { frame: 0 };
+    let loadedCount = 0;
+
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    const preloadImages = () => {
+      for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = currentFrame(startFrame + i);
+        img.onload = () => {
+          loadedCount++;
+          const progress = (loadedCount / frameCount) * 100;
+          loaderFill.style.width = `${progress}%`;
+          
+          if (loadedCount === frameCount) {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 600);
+            render(0); 
+          }
+        };
+        images.push(img);
+      }
+    };
+
+    const container = document.getElementById('journey-trigger');
+    const flash = document.getElementById('trans-flash');
+    const progressBar = document.getElementById('progress-bar');
+    const labels = [
+      document.getElementById('label-1'),
+      document.getElementById('label-2'),
+      document.getElementById('label-3')
+    ];
+    
+    let isPlaying = false;
+    let frameRate = 60; // 60 FPS
+    let lastTimestamp = 0;
+    let hasTransformed = false;
+
+    const render = (timestamp) => {
+      if (!isPlaying && timestamp !== 0) return;
+
+      if (timestamp - lastTimestamp >= 1000 / frameRate || timestamp === 0) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        const img = images[sequence.frame];
+        if (img) {
+          context.drawImage(img, 0, 0);
+        }
+        
+        const frame = sequence.frame;
+        if (frame >= 480 && !hasTransformed) {
+          triggerWOW();
+        } else if (frame < 480 && hasTransformed) {
+          resetWOW();
+        }
+
+        const progress = Math.min(100, (frame / 480) * 100);
+        progressBar.style.width = `${progress}%`;
+        
+        updateNarrative(frame);
+
+        if (timestamp !== 0) {
+          sequence.frame = (sequence.frame + 1) % frameCount;
+          lastTimestamp = timestamp;
+        }
+      }
+      
+      requestAnimationFrame(render);
+    };
+
+    function triggerWOW() {
+      hasTransformed = true;
+      container.classList.add('wow-mode');
+      flash.classList.add('active');
+      setTimeout(() => flash.classList.remove('active'), 800);
+      
+      labels[0].innerText = "Unified Infrastructure";
+      labels[1].innerText = "System Intelligence";
+      labels[2].innerText = "Operational Scale";
+    }
+
+    function resetWOW() {
+      hasTransformed = false;
+      container.classList.remove('wow-mode');
+      labels[0].innerText = "Manual Coordination";
+      labels[1].innerText = "Data Fragmented";
+      labels[2].innerText = "Operational Scale";
+    }
+
+    function updateNarrative(frame) {
+      const stage = frame / frameCount;
+      labels[0].classList.toggle('is-active', stage < 0.33);
+      labels[1].classList.toggle('is-active', stage >= 0.33 && stage < 0.66);
+      labels[2].classList.toggle('is-active', stage >= 0.66);
+    }
+
+    const playbackObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          isPlaying = true;
+          requestAnimationFrame(render);
+        } else {
+          isPlaying = false;
+        }
+      });
+    }, { threshold: 0.1 });
+
+    playbackObserver.observe(canvas);
+    preloadImages();
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("is-revealed");
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll("[data-reveal], [data-reveal-stagger]").forEach(el => {
+      revealObserver.observe(el);
+    });
+  </script>
+</body>
+</html>
