@@ -827,19 +827,25 @@
     canvas.width = 1920;
     canvas.height = 1080;
 
+    const priorityFrames = 60; // Load first 60 frames to start instantly
     const preloadImages = () => {
       for (let i = 0; i < frameCount; i++) {
         const img = new Image();
         img.src = currentFrame(startFrame + i);
         img.onload = () => {
           loadedCount++;
-          const progress = (loadedCount / frameCount) * 100;
-          loaderFill.style.width = `${progress}%`;
           
-          if (loadedCount === frameCount) {
+          // Update loader based on priority frames
+          if (loadedCount <= priorityFrames) {
+            const progress = (loadedCount / priorityFrames) * 100;
+            loaderFill.style.width = `${progress}%`;
+          }
+          
+          // Start experience once priority frames are ready
+          if (loadedCount === priorityFrames) {
             loader.style.opacity = '0';
             setTimeout(() => loader.remove(), 600);
-            render(0); 
+            render(0); // Show first frame
           }
         };
         images.push(img);
