@@ -8,9 +8,9 @@
     :root {
       --bg: #f8f8f7;
       --ink: #070707;
-      --muted: rgba(7, 7, 7, 0.56);
-      --faint: rgba(7, 7, 7, 0.08);
-      --line: rgba(7, 7, 7, 0.12);
+      --muted: rgba(7, 7, 7, 0.44);
+      --faint: rgba(7, 7, 7, 0.06);
+      --line: rgba(7, 7, 7, 0.08);
       --success: #43e617;
       --teal: #14b8a6;
       --indigo: #6366f1;
@@ -31,9 +31,44 @@
       margin: 0;
       background: var(--bg);
       color: var(--ink);
-      letter-spacing: 0;
+      letter-spacing: -0.01em;
       overflow-x: hidden;
     }
+
+    /* THE GLOBAL SHELL */
+    .site-shell {
+      position: relative;
+      max-width: 1440px;
+      margin: 0 auto;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      min-height: 100vh;
+      background: 
+        linear-gradient(90deg, transparent 49.9%, var(--line) 50%, transparent 50.1%); /* Center vertical line */
+      background-size: 100% 100%;
+    }
+
+    /* INTERSECTION NODES (+) */
+    .node-plus {
+      position: absolute;
+      width: 13px;
+      height: 13px;
+      z-index: 10;
+      pointer-events: none;
+      color: var(--line);
+    }
+    .node-plus::before, .node-plus::after {
+      content: "";
+      position: absolute;
+      background: currentColor;
+    }
+    .node-plus::before { top: 6px; left: 0; width: 100%; height: 1px; }
+    .node-plus::after { left: 6px; top: 0; width: 1px; height: 100%; }
+
+    .node-tl { top: -7px; left: -7px; }
+    .node-tr { top: -7px; right: -7px; }
+    .node-bl { bottom: -7px; left: -7px; }
+    .node-br { bottom: -7px; right: -7px; }
 
     [data-reveal] {
       opacity: 0;
@@ -315,58 +350,102 @@
     }
 
     .page-section {
-      padding: 54px 10vw;
-      border-bottom: 1px solid var(--line);
+      padding: 100px 10vw;
+      position: relative;
+    }
+
+    /* ANIMATED DASH BORDER */
+    .dash-border {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-image: linear-gradient(to right, var(--line) 50%, transparent 50%);
+      background-size: 20px 1px;
+      animation: marchingAnts 1s linear infinite;
+    }
+
+    @keyframes marchingAnts {
+      from { background-position: 0 0; }
+      to { background-position: 20px 0; }
     }
 
     .section-grid {
       display: grid;
-      grid-template-columns: 96px minmax(0, 1fr);
+      grid-template-columns: 140px minmax(0, 1fr);
       gap: 48px;
       align-items: start;
+    }
+
+    .section-kicker-wrap {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      position: sticky;
+      top: 140px;
+    }
+
+    .section-label {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      white-space: nowrap;
     }
 
     .section-kicker {
       writing-mode: vertical-rl;
       transform: rotate(180deg);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       font-size: 11px;
-      color: rgba(7, 7, 7, 0.44);
+      font-weight: 500;
+      color: var(--ink);
+      padding: 12px 0;
+      border-left: 1px solid var(--line);
+      margin-left: 10px;
     }
 
     .section-heading {
       margin: 0;
-      font-size: clamp(34px, 4.2vw, 58px);
-      line-height: 1;
+      font-size: clamp(34px, 4.2vw, 54px);
+      line-height: 1.05;
       font-weight: 500;
+      letter-spacing: -0.02em;
     }
 
+    /* BENTO GRID */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      border-top: 1px solid rgba(7, 7, 7, 0.10);
-      border-left: 1px solid rgba(7, 7, 7, 0.10);
-      margin-top: 24px;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-top: 48px;
     }
 
     .info-card {
-      min-height: 190px;
-      padding: 32px 26px;
-      border-right: 1px solid rgba(7, 7, 7, 0.08);
-      border-bottom: 1px solid rgba(7, 7, 7, 0.08);
-      background: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(10px);
+      min-height: 240px;
+      padding: 40px;
+      background: #fff;
       transition: all 400ms cubic-bezier(.19,1,.22,1);
       position: relative;
       overflow: hidden;
+      grid-column: span 4;
     }
+
+    .info-card.wide { grid-column: span 8; }
+    .info-card.full { grid-column: span 12; }
 
     .info-card::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(67, 230, 23, 0.05), transparent);
+      background: linear-gradient(135deg, rgba(67, 230, 23, 0.04), transparent);
       opacity: 0;
       transition: opacity 400ms ease;
     }
@@ -711,6 +790,10 @@
     </div>
   </nav>
 
+  <div class="site-shell">
+    <div class="node-plus node-tl"></div>
+    <div class="node-plus node-tr"></div>
+
   <header class="hero">
     <div class="hero-copy" data-reveal>
       <h1><span>One Platform</span> Connecting Customers, Brokers, Lenders &amp; Investors</h1>
@@ -741,8 +824,12 @@
   </header>
 
   <section class="page-section" id="journey">
+    <div class="dash-border"></div>
     <div class="section-grid">
-      <div class="section-kicker" data-reveal>Journey</div>
+      <div class="section-kicker-wrap">
+        <div class="section-label">System Architecture</div>
+        <div class="section-kicker" data-reveal>Journey</div>
+      </div>
       <div>
         <h2 class="section-heading" data-reveal>Built Around the Entire Lending Journey</h2>
         <div class="video-container" id="journey-trigger">
@@ -779,7 +866,7 @@
             <span class="timeline-label" id="label-3">Operational Scale</span>
           </div>
 
-          <video id="journey-video" src="Final.mp4" muted loop playsinline style="width: 100%; max-width: 1100px; height: auto; display: block; position: relative; z-index: 3;"></video>
+          <video id="journey-video" src="Final.mp4" muted loop playsinline></video>
         </div>
       </div>
     </div>
@@ -789,22 +876,26 @@
     <div class="section-grid">
       <div class="section-kicker" data-reveal>Features</div>
       <div>
-        <h2 class="section-heading" data-reveal>Everything Connected in One Platform</h2>
+        <h2 class="section-heading" data-reveal>Everything Connected<br>in One Platform</h2>
         <div class="card-grid" data-reveal-stagger>
-          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg></div><h3>Unified Workflow Management</h3><p>Bring every stage of the lending lifecycle into a single operational environment.</p></article>
-          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Real-Time Collaboration</h3><p>Keep brokers, providers, and investors aligned with centralized communication and live updates.</p></article>
-          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h3>Intelligent Automation</h3><p>Reduce manual processes and accelerate transactions with automated workflows.</p></article>
-          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Secure Infrastructure</h3><p>Enterprise-grade security and controlled access across all stakeholders.</p></article>
-          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><h3>Scalable Architecture</h3><p>Built to support growing transaction volumes and expanding partner networks.</p></article>
-          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z"/></svg></div><h3>Data &amp; Reporting</h3><p>Gain operational visibility with centralized analytics and reporting.</p></article>
+          <article class="info-card wide"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg></div><h3>Unified Workflow Management</h3><p>Bring every stage of the lending lifecycle into a single operational environment with deep technical integration.</p></article>
+          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Collaboration</h3><p>Centralized stakeholder alignment.</p></article>
+          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h3>Automation</h3><p>Accelerated transactions.</p></article>
+          <article class="info-card wide"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Secure Infrastructure</h3><p>Enterprise-grade security and controlled access across all stakeholders, audited in real-time.</p></article>
+          <article class="info-card wide"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><h3>Scalable Architecture</h3><p>Built to support massive transaction volumes and expanding partner networks globally.</p></article>
+          <article class="info-card"><div class="info-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z"/></svg></div><h3>Reporting</h3><p>Centralized visibility.</p></article>
         </div>
       </div>
     </div>
   </section>
 
   <section class="page-section" id="users">
+    <div class="dash-border"></div>
     <div class="section-grid">
-      <div class="section-kicker" data-reveal>Users</div>
+      <div class="section-kicker-wrap">
+        <div class="section-label">Ecosystem Partners</div>
+        <div class="section-kicker" data-reveal>Users</div>
+      </div>
       <div>
         <h2 class="section-heading" data-reveal>Who Uses the Platform</h2>
         <div class="user-cloud" data-reveal-stagger>
@@ -815,8 +906,12 @@
   </section>
 
   <section class="page-section" id="metrics">
+    <div class="dash-border"></div>
     <div class="section-grid">
-      <div class="section-kicker" data-reveal>Metrics</div>
+      <div class="section-kicker-wrap">
+        <div class="section-label">Scalability Matrix</div>
+        <div class="section-kicker" data-reveal>Metrics</div>
+      </div>
       <div>
         <h2 class="section-heading" data-reveal>Built for Operational Scale</h2>
         <div class="metric-cloud" data-reveal-stagger>
@@ -934,5 +1029,5 @@
       revealObserver.observe(el);
     });
   </script>
-</body>
+  </div> <!-- End Site Shell -->
 </html>
