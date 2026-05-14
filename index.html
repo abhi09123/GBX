@@ -674,6 +674,11 @@
       line-height: 1.55;
     }
 
+    .cta-band .button-row {
+      justify-content: center;
+      margin-top: 34px;
+    }
+
     .footer {
       min-height: 150px;
       display: flex;
@@ -813,14 +818,13 @@
     <div class="section-grid">
       <div class="section-kicker" data-reveal>Metrics</div>
       <div>
-        <h2 class="section-heading" data-reveal>Built for Institutional Scale</h2>
+        <h2 class="section-heading" data-reveal>Built for Operational Scale</h2>
         <div class="metric-cloud" data-reveal-stagger>
-          <span class="chip">£10B+ Assets Managed</span>
-          <span class="chip">50,000+ Transactions</span>
-          <span class="chip">99.99% Uptime</span>
-          <span class="chip">ISO 27001 Certified</span>
-          <span class="chip">Real-time Auditing</span>
-          <span class="chip">Instant Reporting</span>
+          <span class="chip">Faster Deal Processing</span>
+          <span class="chip">Reduced Operational Friction</span>
+          <span class="chip">Centralized Stakeholder Collaboration</span>
+          <span class="chip">Improved Visibility Across Transactions</span>
+          <span class="chip">Scalable Partner Infrastructure</span>
         </div>
       </div>
     </div>
@@ -913,7 +917,10 @@
           video.pause();
         }
       });
-    }, { threshold: 0.1 });
+    }, { 
+      threshold: 0,
+      rootMargin: "-35% 0px -35% 0px" // Trigger only in the center 30% of the screen
+    });
 
     playbackObserver.observe(video);
 
