@@ -321,26 +321,15 @@
       transform: translateZ(0);
     }
 
-    .node-1 { top: 0%; left: 50%; transform: translateX(-50%); }
-    .node-2 { top: 12%; right: 10%; }
-    .node-3 { top: 40%; right: 0%; }
-    .node-4 { bottom: 15%; right: 10%; }
-    .node-5 { bottom: 0%; left: 50%; transform: translateX(-50%); }
-    .node-6 { bottom: 15%; left: 10%; }
-    .node-7 { top: 40%; left: 0%; }
-    .node-8 { top: 12%; left: 10%; }
-    .node-9 { top: -5%; left: 30%; font-size: 11px; opacity: 0; pointer-events: none; } /* Hidden or overflow helper */
-    
-    /* Adjusted for 9 nodes layout */
-    .node-1 { top: 0%; left: 50%; transform: translateX(-50%); }
-    .node-2 { top: 15%; right: 5%; }
-    .node-3 { top: 45%; right: -5%; }
-    .node-4 { bottom: 15%; right: 5%; }
-    .node-5 { bottom: -5%; left: 70%; transform: translateX(-50%); }
-    .node-6 { bottom: -5%; left: 30%; transform: translateX(-50%); }
-    .node-7 { bottom: 15%; left: 5%; }
-    .node-8 { top: 45%; left: -5%; }
-    .node-9 { top: 15%; left: 5%; }
+    .node-1 { top: -10%; left: 50%; transform: translateX(-50%); }
+    .node-2 { top: 5%; left: 82%; }
+    .node-3 { top: 38%; left: 95%; }
+    .node-4 { top: 72%; left: 88%; }
+    .node-5 { top: 92%; left: 65%; }
+    .node-6 { top: 92%; left: 35%; }
+    .node-7 { top: 72%; left: 12%; }
+    .node-8 { top: 38%; left: 5%; }
+    .node-9 { top: 5%; left: 18%; }
 
     .node-1 .check { background: var(--teal); border-color: var(--teal); }
     .node-2 .check { background: var(--indigo); border-color: var(--indigo); }
@@ -938,10 +927,10 @@
     <div class="hero-visual" data-reveal style="transition-delay: 300ms;">
       <div class="connection-stage">
         <svg class="connection-svg" viewBox="0 0 600 500">
-          <!-- 9 paths for 9 nodes -->
-          <path class="conn-path" d="M300 250 L300 60" /><path class="conn-path" d="M300 250 L520 120" /><path class="conn-path" d="M300 250 L580 250" /><path class="conn-path" d="M300 250 L520 380" /><path class="conn-path" d="M300 250 L420 460" /><path class="conn-path" d="M300 250 L180 460" /><path class="conn-path" d="M300 250 L80 380" /><path class="conn-path" d="M300 250 L20 250" /><path class="conn-path" d="M300 250 L80 120" />
+          <!-- Perfectly spread 9 paths -->
+          <path class="conn-path" d="M300 250 L300 40" /><path class="conn-path" d="M300 250 L520 100" /><path class="conn-path" d="M300 250 L580 250" /><path class="conn-path" d="M300 250 L540 400" /><path class="conn-path" d="M300 250 L400 480" /><path class="conn-path" d="M300 250 L200 480" /><path class="conn-path" d="M300 250 L60 400" /><path class="conn-path" d="M300 250 L20 250" /><path class="conn-path" d="M300 250 L80 100" />
           
-          <path class="pulse-path" d="M300 250 L300 60" /><path class="pulse-path" d="M300 250 L520 120" /><path class="pulse-path" d="M300 250 L580 250" /><path class="pulse-path" d="M300 250 L520 380" /><path class="pulse-path" d="M300 250 L420 460" /><path class="pulse-path" d="M300 250 L180 460" /><path class="pulse-path" d="M300 250 L80 380" /><path class="pulse-path" d="M300 250 L20 250" /><path class="pulse-path" d="M300 250 L80 120" />
+          <path class="pulse-path" d="M300 250 L300 40" /><path class="pulse-path" d="M300 250 L520 100" /><path class="pulse-path" d="M300 250 L580 250" /><path class="pulse-path" d="M300 250 L540 400" /><path class="pulse-path" d="M300 250 L400 480" /><path class="pulse-path" d="M300 250 L200 480" /><path class="pulse-path" d="M300 250 L60 400" /><path class="pulse-path" d="M300 250 L20 250" /><path class="pulse-path" d="M300 250 L80 100" />
         </svg>
         <div class="platform-core">
           <svg class="core-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 7v10l8 5 8-5V7l-8-5z" stroke="currentColor" stroke-width="2"/><path d="M12 22V12M20 7l-8 5-8-5" stroke="currentColor" stroke-width="2"/></svg>
