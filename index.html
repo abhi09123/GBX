@@ -432,13 +432,13 @@
     .card-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 32px;
+      gap: 24px;
       margin-top: 48px;
     }
 
     .info-card {
-      min-height: 380px;
-      padding: 48px;
+      min-height: 280px;
+      padding: 32px;
       background: #ffffff;
       border: 1px solid rgba(7, 7, 7, 0.06);
       border-radius: 16px;
@@ -460,24 +460,24 @@
     }
 
     .info-card-icon {
-      width: 54px;
-      height: 54px;
-      margin-bottom: 32px;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 20px;
       color: var(--ink);
       opacity: 0.8;
     }
 
     .info-card h3 {
-      margin: 0 0 16px;
-      font-size: 20px;
+      margin: 0 0 12px;
+      font-size: 18px;
       font-weight: 600;
       letter-spacing: -0.01em;
     }
 
     .info-card p {
-      margin: 0 0 32px;
+      margin: 0 0 24px;
       color: rgba(7, 7, 7, 0.54);
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.6;
       flex-grow: 1;
     }
@@ -672,7 +672,6 @@
       background: var(--success);
       width: 0%;
       box-shadow: 0 0 15px var(--success);
-      transition: width 100ms linear;
     }
 
     .timeline-dot {
@@ -843,8 +842,8 @@
 
   <header class="hero">
     <div class="hero-copy" data-reveal>
-      <h1><span>One Platform</span> Connecting Customers, Brokers, Lenders &amp; Investors</h1>
-      <p>A unified digital platform connecting brokers, lenders, legal teams, surveyors, servicing providers, receivers and investors, enabling faster transactions, operational efficiency, and real-time collaboration across the property finance lifecycle.</p>
+      <h1><span>One Platform</span> Connecting Customers, Brokers &amp; Investors</h1>
+      <p>A unified digital platform connecting brokers, legal teams, surveyors, servicing providers, receivers and investors, enabling faster transactions, operational efficiency, and real-time collaboration across the property finance lifecycle.</p>
       <div class="button-row">
         <a class="btn primary" href="#demo">Book a Demo</a>
         <a class="btn" href="#journey">Explore</a>
@@ -1092,23 +1091,28 @@
       setTimeout(() => loader.remove(), 600);
     });
 
-    // Sync animations with video time
-    video.addEventListener('timeupdate', () => {
-      // The progress bar reaches "end point" at the transformation (62% of video)
-      const transPoint = 0.62;
-      const progress = Math.min(1, video.currentTime / (video.duration * transPoint));
-      
-      // Trigger WOW mode at 62%
-      const actualVideoProgress = video.currentTime / video.duration;
-      if (actualVideoProgress >= transPoint && !hasTransformed) {
-        triggerWOW();
-      } else if (actualVideoProgress < transPoint && hasTransformed) {
-        resetWOW();
-      }
+    // Smooth update loop using requestAnimationFrame
+    function updateProgress() {
+      if (!video.paused && !video.ended) {
+        const transPoint = 0.62;
+        const actualVideoProgress = video.currentTime / video.duration;
+        const progress = Math.min(1, video.currentTime / (video.duration * transPoint));
+        
+        // Trigger WOW mode at 62%
+        if (actualVideoProgress >= transPoint && !hasTransformed) {
+          triggerWOW();
+        } else if (actualVideoProgress < transPoint && hasTransformed) {
+          resetWOW();
+        }
 
-      progressBar.style.width = `${progress * 100}%`;
-      updateNarrative(progress);
-    });
+        progressBar.style.width = `${progress * 100}%`;
+        updateNarrative(progress);
+      }
+      requestAnimationFrame(updateProgress);
+    }
+
+    // Start the loop
+    requestAnimationFrame(updateProgress);
 
     function triggerWOW() {
       hasTransformed = true;
