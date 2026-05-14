@@ -38,7 +38,7 @@
     /* THE GLOBAL SHELL */
     .site-shell {
       position: relative;
-      max-width: 1440px;
+      max-width: 1720px;
       margin: 0 auto;
       border-left: 1px solid var(--line);
       border-right: 1px solid var(--line);
@@ -110,7 +110,7 @@
       align-items: center;
       justify-content: space-between;
       min-height: 64px;
-      padding: 0 10vw;
+      padding: 0 5vw;
       border-bottom: 1px solid rgba(7, 7, 7, 0.10);
       background: rgba(248, 248, 247, 0.82);
       backdrop-filter: blur(16px);
@@ -200,7 +200,7 @@
       grid-template-columns: minmax(0, 1.05fr) minmax(420px, 0.95fr);
       align-items: center;
       gap: 32px;
-      padding: 48px 10vw 32px;
+      padding: 48px 5vw 32px;
       border-bottom: 1px solid var(--line);
     }
 
@@ -277,6 +277,19 @@
       font-weight: 600;
       letter-spacing: 0.02em;
     }
+
+    .hero-label {
+      position: absolute;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .hl-1 { top: 10%; left: 0; }
+    .hl-2 { bottom: 10%; right: 0; }
 
     .service-node {
       position: absolute;
@@ -764,7 +777,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      padding: 0 10vw;
+      padding: 0 5vw;
       color: rgba(7, 7, 7, 0.58);
       font-size: 14px;
     }
@@ -819,6 +832,8 @@
         <div class="service-node node-4"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Receivers</div>
         <div class="service-node node-5"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Surveyors</div>
         <div class="service-node node-6"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Auctioneers</div>
+        <div class="hero-label hl-1">CORE_INFRA v2.4</div>
+        <div class="hero-label hl-2">NODES: SYNCED</div>
       </div>
     </div>
   </header>
@@ -873,8 +888,12 @@
   </section>
 
   <section class="page-section" id="features">
+    <div class="dash-border"></div>
     <div class="section-grid">
-      <div class="section-kicker" data-reveal>Features</div>
+      <div class="section-kicker-wrap">
+        <div class="section-label">Core Capabilities</div>
+        <div class="section-kicker" data-reveal>Features</div>
+      </div>
       <div>
         <h2 class="section-heading" data-reveal>Everything Connected<br>in One Platform</h2>
         <div class="card-grid" data-reveal-stagger>
