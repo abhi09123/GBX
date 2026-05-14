@@ -436,43 +436,38 @@
       letter-spacing: -0.02em;
     }
 
-    /* BENTO GRID */
+    /* UNIFORM 4-COLUMN GRID */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 24px;
-      margin-top: 48px;
+      margin-top: 64px;
     }
 
     .info-card {
-      min-height: 280px;
-      padding: 32px;
+      min-height: 480px;
+      padding: 40px;
       background: #ffffff;
       border: 1px solid rgba(7, 7, 7, 0.06);
       border-radius: 16px;
       transition: all 400ms cubic-bezier(.19,1,.22,1);
       position: relative;
-      overflow: hidden;
-      grid-column: span 4;
       display: flex;
       flex-direction: column;
     }
 
-    .info-card.wide { grid-column: span 8; }
-    .info-card.full { grid-column: span 12; }
-
     .info-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.06);
       border-color: rgba(7, 7, 7, 0.1);
     }
 
     .info-card-icon {
-      width: 32px;
-      height: 32px;
-      margin-bottom: 20px;
+      width: 84px;
+      height: 84px;
+      margin-bottom: 48px;
       color: var(--ink);
-      opacity: 0.8;
+      opacity: 0.9;
     }
 
     .info-card h3 {
@@ -483,11 +478,18 @@
     }
 
     .info-card p {
-      margin: 0 0 24px;
+      margin: 0 0 32px;
       color: rgba(7, 7, 7, 0.54);
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 15px;
+      line-height: 1.62;
       flex-grow: 1;
+    }
+
+    @media (max-width: 1200px) {
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .card-grid { grid-template-columns: 1fr; }
     }
 
     .card-link {
@@ -937,10 +939,9 @@
       <div>
         <h2 class="section-heading" data-reveal>Everything Connected<br>in One Platform</h2>
         <div class="card-grid" data-reveal-stagger>
-          <article class="info-card wide">
+          <article class="info-card">
             <div class="info-card-icon">
-              <!-- Isometric Network Icon -->
-              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2">
                 <circle cx="32" cy="32" r="6" />
                 <path d="M32 10 L32 26 M32 38 L32 54 M10 32 L26 32 M38 32 L54 32" />
                 <circle cx="32" cy="10" r="3" /><circle cx="32" cy="54" r="3" /><circle cx="10" cy="32" r="3" /><circle cx="54" cy="32" r="3" />
@@ -948,15 +949,14 @@
                 <circle cx="18" cy="18" r="3" /><circle cx="46" cy="46" r="3" /><circle cx="46" cy="18" r="3" /><circle cx="18" cy="46" r="3" />
               </svg>
             </div>
-            <h3>Unified Workflow Management</h3>
-            <p>Bring every stage of the lending lifecycle into a single operational environment with deep technical integration and real-time oversight.</p>
+            <h3>Unified Workflow</h3>
+            <p>Bring every stage of the lending lifecycle into a single operational environment with deep technical integration.</p>
             <a href="#" class="card-link">Learn more</a>
           </article>
           
           <article class="info-card">
             <div class="info-card-icon">
-              <!-- Isometric Device Icon -->
-              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2">
                 <rect x="20" y="10" width="24" height="44" rx="3" transform="rotate(-5 32 32)" />
                 <path d="M28 18 L36 18" stroke-dasharray="2 2" />
                 <circle cx="32" cy="44" r="2" />
@@ -964,61 +964,33 @@
               </svg>
             </div>
             <h3>Collaboration</h3>
-            <p>Centralized stakeholder alignment across brokers, lenders, and partners.</p>
+            <p>Centralized stakeholder alignment across brokers, lenders, and partners in real-time.</p>
             <a href="#" class="card-link">Learn more</a>
           </article>
 
           <article class="info-card">
             <div class="info-card-icon">
-              <!-- Hand/Coin Style Icon -->
-              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2">
                 <path d="M10 45 C10 45 20 50 32 50 C44 50 54 45 54 45 L54 30 L10 30 Z" />
                 <circle cx="32" cy="22" r="10" />
                 <path d="M28 22 L36 22 M32 18 L32 26" />
               </svg>
             </div>
             <h3>Automation</h3>
-            <p>Accelerated transactions through intelligent routing and auto-processing.</p>
-            <a href="#" class="card-link">Learn more</a>
-          </article>
-
-          <article class="info-card wide">
-            <div class="info-card-icon">
-              <!-- Infrastructure Icon -->
-              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M10 50 L32 60 L54 50 L32 40 Z" />
-                <path d="M10 35 L32 45 L54 35 L32 25 Z" />
-                <path d="M10 20 L32 30 L54 20 L32 10 Z" />
-              </svg>
-            </div>
-            <h3>Secure Infrastructure</h3>
-            <p>Enterprise-grade security and controlled access across all stakeholders, audited in real-time with immutable logs.</p>
-            <a href="#" class="card-link">Learn more</a>
-          </article>
-
-          <article class="info-card wide">
-            <div class="info-card-icon">
-              <!-- Scalable Layers Icon -->
-              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M8 32 L32 48 L56 32 M8 20 L32 36 L56 20 M32 4 L8 20 L32 36 L56 20 Z" />
-              </svg>
-            </div>
-            <h3>Scalable Architecture</h3>
-            <p>Built to support massive transaction volumes and expanding partner networks globally with cloud-native reliability.</p>
+            <p>Accelerated transactions through intelligent routing and auto-processing logic.</p>
             <a href="#" class="card-link">Learn more</a>
           </article>
 
           <article class="info-card">
             <div class="info-card-icon">
-              <!-- Reporting/Chart Icon -->
-              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M10 54 L54 54 M10 54 L10 10" />
-                <path d="M18 42 L26 30 L34 38 L46 18" stroke-width="2" />
-                <circle cx="46" cy="18" r="2" fill="currentColor" />
+              <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2">
+                <path d="M10 50 L32 60 L54 50 L32 40 Z" />
+                <path d="M10 35 L32 45 L54 35 L32 25 Z" />
+                <path d="M10 20 L32 30 L54 20 L32 10 Z" />
               </svg>
             </div>
-            <h3>Reporting</h3>
-            <p>Centralized visibility and automated investor reporting.</p>
+            <h3>Secure Infra</h3>
+            <p>Enterprise-grade security and controlled access, audited in real-time with immutable logs.</p>
             <a href="#" class="card-link">Learn more</a>
           </article>
         </div>
