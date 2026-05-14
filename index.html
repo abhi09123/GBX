@@ -446,10 +446,18 @@
       display: flex;
       gap: 20px;
       overflow-x: auto;
-      padding: 10px 4px 40px;
+      padding: 10px 0 40px;
       scroll-snap-type: x mandatory;
-      scrollbar-width: none; /* Hide scrollbar Firefox */
-      -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      /* Allow content to bleed to edges but respect container on scroll end */
+      margin: 0 -5vw;
+      padding: 10px 5vw 40px;
+    }
+
+    .card-grid::after {
+      content: "";
+      flex: 0 0 20px; /* Small buffer at the very end */
     }
 
     .card-grid::-webkit-scrollbar {
@@ -457,7 +465,7 @@
     }
 
     .info-card {
-      flex: 0 0 320px;
+      flex: 0 0 340px;
       scroll-snap-align: start;
       min-height: 420px;
       padding: 34px;
@@ -477,10 +485,18 @@
     }
 
     .info-card-icon {
-      width: 100px;
-      height: 100px;
+      width: 124px;
+      height: 124px;
       margin-bottom: 32px;
       color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info-card-icon svg {
+      width: 100%;
+      height: 100%;
     }
 
     .info-card h3 {
@@ -989,12 +1005,13 @@
           <div class="card-grid" id="features-scroll" data-reveal-stagger>
             <article class="info-card">
               <div class="info-card-icon">
-                <!-- Isometric Connection -->
-                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.2">
-                  <path d="M40 20 L60 30 L40 40 L20 30 Z" />
-                  <path d="M40 40 L60 50 L40 60 L20 50 Z" />
-                  <path d="M20 30 L20 50 M60 30 L60 50 M40 40 L40 60" />
-                  <circle cx="40" cy="20" r="2" fill="currentColor" />
+                <!-- Isometric Connectivity -->
+                <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2">
+                  <path d="M60 30 L90 45 L60 60 L30 45 Z" />
+                  <path d="M60 60 L90 75 L60 90 L30 75 Z" />
+                  <path d="M30 45 L30 75 M90 45 L90 75 M60 60 L60 90" />
+                  <circle cx="60" cy="30" r="3" fill="currentColor" />
+                  <path d="M40 35 L40 65 M80 35 L80 65" stroke-dasharray="2 2" />
                 </svg>
               </div>
               <h3>Unified Workflow</h3>
@@ -1005,10 +1022,11 @@
             <article class="info-card">
               <div class="info-card-icon">
                 <!-- Isometric Device -->
-                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.2">
-                  <path d="M30 20 L50 25 L50 60 L30 55 Z" />
-                  <path d="M50 25 L55 22 L55 57 L50 60" />
-                  <path d="M30 20 L35 17 L55 22" />
+                <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2">
+                  <path d="M45 30 L75 35 L75 85 L45 80 Z" />
+                  <path d="M75 35 L85 30 L85 80 L75 85" />
+                  <path d="M45 30 L55 25 L85 30" />
+                  <circle cx="60" cy="70" r="4" stroke-width="1" />
                 </svg>
               </div>
               <h3>Collaboration</h3>
@@ -1018,10 +1036,11 @@
 
             <article class="info-card">
               <div class="info-card-icon">
-                <!-- Isometric Gear/Process -->
-                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.2">
-                  <path d="M40 15 L55 25 L55 45 L40 55 L25 45 L25 25 Z" />
-                  <path d="M40 15 L40 55 M55 25 L25 45 M25 25 L55 45" stroke-dasharray="2 2" />
+                <!-- Isometric Process -->
+                <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2">
+                  <path d="M60 20 L85 35 L85 65 L60 80 L35 65 L35 35 Z" />
+                  <path d="M60 35 L75 45 L75 55 L60 65 L45 55 L45 45 Z" />
+                  <path d="M60 20 L60 35 M85 35 L75 45 M85 65 L75 55 M60 80 L60 65 M35 65 L45 55 M35 35 L45 45" />
                 </svg>
               </div>
               <h3>Automation</h3>
@@ -1032,9 +1051,10 @@
             <article class="info-card">
               <div class="info-card-icon">
                 <!-- Isometric Shield -->
-                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.2">
-                  <path d="M40 20 L55 25 L55 45 C55 55 40 65 40 65 C40 65 25 55 25 45 L25 25 Z" />
-                  <path d="M40 20 L40 65" />
+                <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2">
+                  <path d="M60 30 L85 40 L85 70 C85 85 60 95 60 95 C60 95 35 85 35 70 L35 40 Z" />
+                  <path d="M60 30 L60 95" />
+                  <path d="M45 45 L75 45 M45 55 L75 55" stroke-dasharray="2 2" />
                 </svg>
               </div>
               <h3>Secure Infra</h3>
@@ -1044,11 +1064,11 @@
 
             <article class="info-card">
               <div class="info-card-icon">
-                <!-- Isometric Layers -->
-                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.2">
-                  <path d="M20 30 L40 40 L60 30 L40 20 Z" />
-                  <path d="M20 40 L40 50 L60 40" />
-                  <path d="M20 50 L40 60 L60 50" />
+                <!-- Isometric Stack -->
+                <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2">
+                  <path d="M30 45 L60 60 L90 45 L60 30 Z" />
+                  <path d="M30 60 L60 75 L90 60" />
+                  <path d="M30 75 L60 90 L90 75" />
                 </svg>
               </div>
               <h3>Scalable Architecture</h3>
@@ -1058,10 +1078,11 @@
 
             <article class="info-card">
               <div class="info-card-icon">
-                <!-- Isometric Chart -->
-                <svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.2">
-                  <path d="M25 55 L55 55 M25 55 L25 25" />
-                  <path d="M25 50 L35 40 L45 45 L55 30" stroke-width="2" />
+                <!-- Isometric Analytics -->
+                <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2">
+                  <path d="M35 80 L85 80 M35 80 L35 30" />
+                  <path d="M40 70 L55 55 L70 65 L85 40" stroke-width="2" />
+                  <path d="M85 80 L85 40" stroke-dasharray="2 2" />
                 </svg>
               </div>
               <h3>Advanced Reporting</h3>
