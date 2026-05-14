@@ -444,20 +444,17 @@
 
     .card-grid {
       display: flex;
-      gap: 20px;
+      gap: 24px;
       overflow-x: auto;
       padding: 10px 0 40px;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      /* Allow content to bleed to edges but respect container on scroll end */
-      margin: 0 -5vw;
-      padding: 10px 5vw 40px;
     }
 
     .card-grid::after {
       content: "";
-      flex: 0 0 20px; /* Small buffer at the very end */
+      flex: 0 0 100px; /* Large buffer at the end to prevent right clipping */
     }
 
     .card-grid::-webkit-scrollbar {
@@ -467,8 +464,8 @@
     .info-card {
       flex: 0 0 340px;
       scroll-snap-align: start;
-      min-height: 420px;
-      padding: 34px;
+      min-height: auto;
+      padding: 32px 32px 40px;
       background: #ffffff;
       border: 1px solid rgba(7, 7, 7, 0.06);
       border-radius: 16px;
@@ -500,7 +497,7 @@
     }
 
     .info-card h3 {
-      margin: 0 0 10px;
+      margin: 0 0 8px;
       font-size: 19px;
       font-weight: 600;
       letter-spacing: -0.01em;
@@ -510,7 +507,7 @@
       margin: 0 0 24px;
       color: rgba(7, 7, 7, 0.54);
       font-size: 15px;
-      line-height: 1.55;
+      line-height: 1.5;
       flex-grow: 1;
     }
 
@@ -995,10 +992,10 @@
         <h2 class="section-heading" data-reveal>Everything Connected<br>in One Platform</h2>
         <div class="card-grid-container">
           <div class="scroll-nav">
-            <button class="scroll-btn" onclick="document.getElementById('features-scroll').scrollBy({left: -340, behavior: 'smooth'})">
+            <button class="scroll-btn" onclick="document.getElementById('features-scroll').scrollBy({left: -364, behavior: 'smooth'})">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
             </button>
-            <button class="scroll-btn" onclick="document.getElementById('features-scroll').scrollBy({left: 340, behavior: 'smooth'})">
+            <button class="scroll-btn" onclick="document.getElementById('features-scroll').scrollBy({left: 364, behavior: 'smooth'})">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
             </button>
           </div>
