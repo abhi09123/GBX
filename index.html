@@ -758,7 +758,7 @@
             <span class="timeline-label" id="label-3">Operational Scale</span>
           </div>
 
-          <canvas id="journey-canvas"></canvas>
+          <video id="journey-video" src="Final.mp4" muted loop playsinline style="width: 100%; max-width: 1100px; height: auto; display: block; position: relative; z-index: 3;"></video>
         </div>
       </div>
     </div>
@@ -807,51 +807,11 @@
   </footer>
 
   <script>
-    const canvas = document.getElementById('journey-canvas');
-    const context = canvas.getContext('2d');
+    const video = document.getElementById('journey-video');
     const trigger = document.getElementById('journey-trigger');
     const loader = document.getElementById('journey-loader');
     const loaderFill = document.getElementById('loader-fill');
     
-    const frameCount = 770; // 1000 to 1769
-    const startFrame = 1000;
-    
-    const currentFrame = index => (
-      `./png/Final_${index.toString().padStart(4, '0')}.png`
-    );
-
-    const images = [];
-    const sequence = { frame: 0 };
-    let loadedCount = 0;
-
-    canvas.width = 1920;
-    canvas.height = 1080;
-
-    const priorityFrames = 60; // Load first 60 frames to start instantly
-    const preloadImages = () => {
-      for (let i = 0; i < frameCount; i++) {
-        const img = new Image();
-        img.src = currentFrame(startFrame + i);
-        img.onload = () => {
-          loadedCount++;
-          
-          // Update loader based on priority frames
-          if (loadedCount <= priorityFrames) {
-            const progress = (loadedCount / priorityFrames) * 100;
-            loaderFill.style.width = `${progress}%`;
-          }
-          
-          // Start experience once priority frames are ready
-          if (loadedCount === priorityFrames) {
-            loader.style.opacity = '0';
-            setTimeout(() => loader.remove(), 600);
-            render(0); // Show first frame
-          }
-        };
-        images.push(img);
-      }
-    };
-
     const container = document.getElementById('journey-trigger');
     const flash = document.getElementById('trans-flash');
     const progressBar = document.getElementById('progress-bar');
@@ -861,41 +821,28 @@
       document.getElementById('label-3')
     ];
     
-    let isPlaying = false;
-    let frameRate = 60; // 60 FPS
-    let lastTimestamp = 0;
     let hasTransformed = false;
 
-    const render = (timestamp) => {
-      if (!isPlaying && timestamp !== 0) return;
+    // Handle video loading
+    video.addEventListener('loadeddata', () => {
+      loader.style.opacity = '0';
+      setTimeout(() => loader.remove(), 600);
+    });
 
-      if (timestamp - lastTimestamp >= 1000 / frameRate || timestamp === 0) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        const img = images[sequence.frame];
-        if (img) {
-          context.drawImage(img, 0, 0);
-        }
-        
-        const frame = sequence.frame;
-        if (frame >= 480 && !hasTransformed) {
-          triggerWOW();
-        } else if (frame < 480 && hasTransformed) {
-          resetWOW();
-        }
-
-        const progress = Math.min(100, (frame / 480) * 100);
-        progressBar.style.width = `${progress}%`;
-        
-        updateNarrative(frame);
-
-        if (timestamp !== 0) {
-          sequence.frame = (sequence.frame + 1) % frameCount;
-          lastTimestamp = timestamp;
-        }
-      }
+    // Sync animations with video time
+    video.addEventListener('timeupdate', () => {
+      const progress = video.currentTime / video.duration;
       
-      requestAnimationFrame(render);
-    };
+      // Trigger WOW mode at 62% (matches frame 480/770)
+      if (progress >= 0.62 && !hasTransformed) {
+        triggerWOW();
+      } else if (progress < 0.62 && hasTransformed) {
+        resetWOW();
+      }
+
+      progressBar.style.width = `${Math.min(100, progress * 100)}%`;
+      updateNarrative(progress);
+    });
 
     function triggerWOW() {
       hasTransformed = true;
@@ -916,26 +863,23 @@
       labels[2].innerText = "Operational Scale";
     }
 
-    function updateNarrative(frame) {
-      const stage = frame / frameCount;
-      labels[0].classList.toggle('is-active', stage < 0.33);
-      labels[1].classList.toggle('is-active', stage >= 0.33 && stage < 0.66);
-      labels[2].classList.toggle('is-active', stage >= 0.66);
+    function updateNarrative(progress) {
+      labels[0].classList.toggle('is-active', progress < 0.33);
+      labels[1].classList.toggle('is-active', progress >= 0.33 && progress < 0.66);
+      labels[2].classList.toggle('is-active', progress >= 0.66);
     }
 
     const playbackObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          isPlaying = true;
-          requestAnimationFrame(render);
+          video.play();
         } else {
-          isPlaying = false;
+          video.pause();
         }
       });
     }, { threshold: 0.1 });
 
-    playbackObserver.observe(canvas);
-    preloadImages();
+    playbackObserver.observe(video);
 
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
