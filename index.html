@@ -197,7 +197,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 54px;
+      gap: 100px;
       padding: 100px 5vw 64px;
       border-bottom: 1px solid var(--line);
     }
@@ -321,22 +321,42 @@
       transform: translateZ(0);
     }
 
-    .node-1 { top: -10%; left: 50%; transform: translateX(-50%); }
-    .node-2 { top: 5%; left: 82%; }
-    .node-3 { top: 38%; left: 95%; }
-    .node-4 { top: 72%; left: 88%; }
-    .node-5 { top: 92%; left: 65%; }
-    .node-6 { top: 92%; left: 35%; }
-    .node-7 { top: 72%; left: 12%; }
-    .node-8 { top: 38%; left: 5%; }
-    .node-9 { top: 5%; left: 18%; }
+    .service-node {
+      position: absolute;
+      background: white;
+      padding: 8px 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      white-space: nowrap;
+      z-index: 10;
+      transform: translate(-50%, -50%); /* Center on coordinates */
+    }
 
-    .node-1 .check { background: var(--teal); border-color: var(--teal); }
-    .node-2 .check { background: var(--indigo); border-color: var(--indigo); }
-    .node-3 .check { background: var(--rose); border-color: var(--rose); }
-    .node-4 .check { background: var(--amber); border-color: var(--amber); }
-    .node-5 .check { background: var(--blue); border-color: var(--blue); }
-    .node-6 .check { background: var(--success); border-color: var(--success); }
+    .node-1 { top: 5%; left: 50%; }
+    .node-2 { top: 15%; left: 82%; }
+    .node-3 { top: 48%; left: 95%; }
+    .node-4 { top: 82%; left: 88%; }
+    .node-5 { top: 95%; left: 65%; }
+    .node-6 { top: 95%; left: 35%; }
+    .node-7 { top: 82%; left: 12%; }
+    .node-8 { top: 48%; left: 5%; }
+    .node-9 { top: 15%; left: 18%; }
+
+    .node-1 .check { background: #10b981; border-color: #10b981; } /* Emerald */
+    .node-2 .check { background: #6366f1; border-color: #6366f1; } /* Indigo */
+    .node-3 .check { background: #f43f5e; border-color: #f43f5e; } /* Rose */
+    .node-4 .check { background: #f59e0b; border-color: #f59e0b; } /* Amber */
+    .node-5 .check { background: #3b82f6; border-color: #3b82f6; } /* Blue */
+    .node-6 .check { background: #8b5cf6; border-color: #8b5cf6; } /* Violet */
+    .node-7 .check { background: #f97316; border-color: #f97316; } /* Orange */
+    .node-8 .check { background: #06b6d4; border-color: #06b6d4; } /* Cyan */
+    .node-9 .check { background: #ec4899; border-color: #ec4899; } /* Pink */
 
     .service-node .check {
       color: #fff;
@@ -458,7 +478,8 @@
       display: flex;
       gap: 24px;
       overflow-x: auto;
-      padding: 10px 0 40px;
+      padding: 10px 5vw 40px;
+      margin: 0 -5vw; /* Bleed to screen edges */
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
       -ms-overflow-style: none;
@@ -926,11 +947,11 @@
     </div>
     <div class="hero-visual" data-reveal style="transition-delay: 300ms;">
       <div class="connection-stage">
-        <svg class="connection-svg" viewBox="0 0 600 500">
-          <!-- Precise connection paths for all 9 nodes -->
-          <path class="conn-path" d="M300 250 L300 -20" /><path class="conn-path" d="M300 250 L492 40" /><path class="conn-path" d="M300 250 L570 205" /><path class="conn-path" d="M300 250 L528 375" /><path class="conn-path" d="M300 250 L390 475" /><path class="conn-path" d="M300 250 L210 475" /><path class="conn-path" d="M300 250 L72 375" /><path class="conn-path" d="M300 250 L30 205" /><path class="conn-path" d="M300 250 L108 40" />
+        <svg class="connection-svg" viewBox="0 0 600 500" style="z-index: 1;">
+          <!-- Shortened paths to end safely behind capsules -->
+          <path class="conn-path" d="M300 250 L300 45" /><path class="conn-path" d="M300 250 L470 90" /><path class="conn-path" d="M300 250 L540 240" /><path class="conn-path" d="M300 250 L505 385" /><path class="conn-path" d="M300 250 L375 440" /><path class="conn-path" d="M300 250 L225 440" /><path class="conn-path" d="M300 250 L95 385" /><path class="conn-path" d="M300 250 L60 240" /><path class="conn-path" d="M300 250 L130 90" />
           
-          <path class="pulse-path" d="M300 250 L300 -20" /><path class="pulse-path" d="M300 250 L492 40" /><path class="pulse-path" d="M300 250 L570 205" /><path class="pulse-path" d="M300 250 L528 375" /><path class="pulse-path" d="M300 250 L390 475" /><path class="pulse-path" d="M300 250 L210 475" /><path class="pulse-path" d="M300 250 L72 375" /><path class="pulse-path" d="M300 250 L30 205" /><path class="pulse-path" d="M300 250 L108 40" />
+          <path class="pulse-path" d="M300 250 L300 45" /><path class="pulse-path" d="M300 250 L470 90" /><path class="pulse-path" d="M300 250 L540 240" /><path class="pulse-path" d="M300 250 L505 385" /><path class="pulse-path" d="M300 250 L375 440" /><path class="pulse-path" d="M300 250 L225 440" /><path class="pulse-path" d="M300 250 L95 385" /><path class="pulse-path" d="M300 250 L60 240" /><path class="pulse-path" d="M300 250 L130 90" />
         </svg>
         <div class="platform-core">
           <svg class="core-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 7v10l8 5 8-5V7l-8-5z" stroke="currentColor" stroke-width="2"/><path d="M12 22V12M20 7l-8 5-8-5" stroke="currentColor" stroke-width="2"/></svg>
