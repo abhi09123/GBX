@@ -584,13 +584,13 @@
       transform: translateY(-2px);
     }
 
-    #journey-canvas {
+    #journey-video {
       width: 100%;
-      max-width: 1100px;
-      height: auto;
+      height: 100%;
       display: block;
       position: relative;
       z-index: 3;
+      object-fit: cover; /* Ensures no white space on sides */
     }
 
     .loader-overlay {
