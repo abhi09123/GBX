@@ -98,6 +98,7 @@
     .is-revealed > *:nth-child(7) { transition-delay: 650ms; }
     .is-revealed > *:nth-child(8) { transition-delay: 750ms; }
     .is-revealed > *:nth-child(9) { transition-delay: 850ms; }
+    .is-revealed > *:nth-child(10) { transition-delay: 950ms; }
 
     .site-nav {
       position: sticky;
@@ -334,19 +335,20 @@
       font-weight: 500;
       color: var(--ink);
       white-space: nowrap;
-      z-index: 10;
+      z-index: 120;
       transform: translate(-50%, -50%); /* Center on coordinates */
     }
 
     .node-1 { top: 5%; left: 50%; }
-    .node-2 { top: 15%; left: 82%; }
-    .node-3 { top: 48%; left: 95%; }
-    .node-4 { top: 82%; left: 88%; }
-    .node-5 { top: 95%; left: 65%; }
-    .node-6 { top: 95%; left: 35%; }
-    .node-7 { top: 82%; left: 12%; }
-    .node-8 { top: 48%; left: 5%; }
-    .node-9 { top: 15%; left: 18%; }
+    .node-2 { top: 12%; left: 78%; }
+    .node-3 { top: 35%; left: 93%; }
+    .node-4 { top: 65%; left: 95%; }
+    .node-5 { top: 88%; left: 82%; }
+    .node-6 { top: 95%; left: 50%; }
+    .node-7 { top: 88%; left: 18%; }
+    .node-8 { top: 65%; left: 5%; }
+    .node-9 { top: 35%; left: 7%; }
+    .node-10 { top: 12%; left: 22%; }
 
     .node-1 .check { background: #10b981; border-color: #10b981; } /* Emerald */
     .node-2 .check { background: #6366f1; border-color: #6366f1; } /* Indigo */
@@ -357,6 +359,7 @@
     .node-7 .check { background: #f97316; border-color: #f97316; } /* Orange */
     .node-8 .check { background: #06b6d4; border-color: #06b6d4; } /* Cyan */
     .node-9 .check { background: #ec4899; border-color: #ec4899; } /* Pink */
+    .node-10 .check { background: #7c3aed; border-color: #7c3aed; } /* Deep Purple */
 
     .service-node .check {
       color: #fff;
@@ -370,9 +373,9 @@
 
     .connection-svg {
       position: absolute;
-      inset: -50px;
-      width: calc(100% + 100px);
-      height: calc(100% + 100px);
+      inset: 0;
+      width: 100%;
+      height: 100%;
       z-index: 1;
       pointer-events: none;
     }
@@ -386,17 +389,19 @@
 
     .pulse-path {
       fill: none;
-      stroke: var(--ink);
-      stroke-width: 2.2;
+      stroke: var(--success);
+      stroke-width: 3;
       stroke-linecap: round;
-      stroke-dasharray: 20 100;
-      stroke-dashoffset: 120;
-      animation: dataFlow 3s linear infinite;
-      opacity: 0.35;
+      stroke-linejoin: round;
+      stroke-dasharray: 140 2400;
+      animation: journeyFlow 10s linear infinite;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 10px var(--success));
     }
 
-    @keyframes dataFlow {
-      to { stroke-dashoffset: 0; }
+    @keyframes journeyFlow {
+      0% { stroke-dashoffset: 2540; }
+      100% { stroke-dashoffset: 0; }
     }
 
     .page-section {
@@ -949,9 +954,12 @@
       <div class="connection-stage">
         <svg class="connection-svg" viewBox="0 0 600 500" style="z-index: 1;">
           <!-- Shortened paths to end safely behind capsules -->
-          <path class="conn-path" d="M300 250 L300 45" /><path class="conn-path" d="M300 250 L470 90" /><path class="conn-path" d="M300 250 L540 240" /><path class="conn-path" d="M300 250 L505 385" /><path class="conn-path" d="M300 250 L375 440" /><path class="conn-path" d="M300 250 L225 440" /><path class="conn-path" d="M300 250 L95 385" /><path class="conn-path" d="M300 250 L60 240" /><path class="conn-path" d="M300 250 L130 90" />
+          <!-- Static dashed connections to center -->
+          <path class="conn-path" d="M300 250 L300 25" /><path class="conn-path" d="M300 250 L468 60" /><path class="conn-path" d="M300 250 L558 175" /><path class="conn-path" d="M300 250 L570 325" /><path class="conn-path" d="M300 250 L492 440" /><path class="conn-path" d="M300 250 L300 475" /><path class="conn-path" d="M300 250 L108 440" /><path class="conn-path" d="M300 250 L30 325" /><path class="conn-path" d="M300 250 L42 175" /><path class="conn-path" d="M300 250 L132 60" />
           
-          <path class="pulse-path" d="M300 250 L300 45" /><path class="pulse-path" d="M300 250 L470 90" /><path class="pulse-path" d="M300 250 L540 240" /><path class="pulse-path" d="M300 250 L505 385" /><path class="pulse-path" d="M300 250 L375 440" /><path class="pulse-path" d="M300 250 L225 440" /><path class="pulse-path" d="M300 250 L95 385" /><path class="pulse-path" d="M300 250 L60 240" /><path class="pulse-path" d="M300 250 L130 90" />
+          <!-- Sequential Journey Path (The Clock Effect) -->
+          <path class="journey-track" d="M300 250 L300 25 L468 60 L558 175 L570 325 L492 440 L300 475 L108 440 L30 325 L42 175 L132 60 Z" fill="none" stroke="rgba(7,7,7,0.03)" stroke-width="1.5" />
+          <path class="pulse-path" d="M300 250 L300 25 L468 60 L558 175 L570 325 L492 440 L300 475 L108 440 L30 325 L42 175 L132 60 Z" />
         </svg>
         <div class="platform-core">
           <svg class="core-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 7v10l8 5 8-5V7l-8-5z" stroke="currentColor" stroke-width="2"/><path d="M12 22V12M20 7l-8 5-8-5" stroke="currentColor" stroke-width="2"/></svg>
@@ -965,7 +973,8 @@
         <div class="service-node node-6"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Servicing</div>
         <div class="service-node node-7"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Receiving</div>
         <div class="service-node node-8"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Auctions</div>
-        <div class="service-node node-9"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Loan Sales</div>
+        <div class="service-node node-9"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Whole Loan Sales</div>
+        <div class="service-node node-10"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Securitisation</div>
       </div>
     </div>
   </header>
@@ -1141,7 +1150,7 @@
       <div>
         <h2 class="section-heading" data-reveal>Who Uses the Platform</h2>
         <div class="user-cloud" data-reveal-stagger>
-          <span class="chip">Customers</span><span class="chip">Brokers</span><span class="chip">Lenders</span><span class="chip">Legal Firms</span><span class="chip">Surveyors</span><span class="chip">Servicing Teams</span><span class="chip">Receivers</span><span class="chip">Auctioneers</span><span class="chip">Investors</span>
+          <span class="chip">Customers</span><span class="chip">Brokers</span><span class="chip">Lenders</span><span class="chip">Legal Firms</span><span class="chip">Surveyors</span><span class="chip">Servicing Teams</span><span class="chip">Receivers</span><span class="chip">Auctioneers</span><span class="chip">Investors</span><span class="chip">Whole Loan Sales</span><span class="chip">Securitisation Teams</span>
         </div>
       </div>
     </div>
