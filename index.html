@@ -360,16 +360,16 @@
       4% { transform: translate(-50%, -50%) scale(1.08); border-color: var(--success); box-shadow: 0 12px 30px rgba(67, 230, 23, 0.15); }
     }
 
-    .node-1 { top: 5%; left: 50%; animation-delay: 1.0s; }
-    .node-2 { top: 12%; left: 78%; animation-delay: 1.8s; }
-    .node-3 { top: 35%; left: 93%; animation-delay: 2.6s; }
-    .node-4 { top: 65%; left: 95%; animation-delay: 3.4s; }
-    .node-5 { top: 88%; left: 82%; animation-delay: 4.2s; }
-    .node-6 { top: 95%; left: 50%; animation-delay: 5.0s; }
-    .node-7 { top: 88%; left: 18%; animation-delay: 5.8s; }
-    .node-8 { top: 65%; left: 5%; animation-delay: 6.6s; }
-    .node-9 { top: 35%; left: 7%; animation-delay: 7.4s; }
-    .node-10 { top: 12%; left: 22%; animation-delay: 8.2s; }
+    .node-1 { top: 5%; left: 50%; animation-delay: 0.78s; }
+    .node-2 { top: 12%; left: 78%; animation-delay: 1.68s; }
+    .node-3 { top: 35%; left: 93%; animation-delay: 2.44s; }
+    .node-4 { top: 65%; left: 95%; animation-delay: 3.23s; }
+    .node-5 { top: 88%; left: 82%; animation-delay: 3.97s; }
+    .node-6 { top: 95%; left: 50%; animation-delay: 4.99s; }
+    .node-7 { top: 88%; left: 18%; animation-delay: 6.02s; }
+    .node-8 { top: 65%; left: 5%; animation-delay: 6.76s; }
+    .node-9 { top: 35%; left: 7%; animation-delay: 7.55s; }
+    .node-10 { top: 12%; left: 22%; animation-delay: 8.31s; }
 
     .node-1 .check { background: #10b981; border-color: #10b981; } /* Emerald */
     .node-2 .check { background: #6366f1; border-color: #6366f1; } /* Indigo */
@@ -414,14 +414,14 @@
       stroke-width: 3;
       stroke-linecap: round;
       stroke-linejoin: round;
-      stroke-dasharray: 140 2400;
+      stroke-dasharray: 80 1000;
       animation: journeyFlow 10s linear infinite;
       opacity: 0.9;
       filter: drop-shadow(0 0 10px var(--success));
     }
 
     @keyframes journeyFlow {
-      0% { stroke-dashoffset: 2540; }
+      0% { stroke-dashoffset: 1080; }
       100% { stroke-dashoffset: 0; }
     }
 
@@ -979,8 +979,8 @@
           <path class="conn-path" d="M300 250 L300 25" /><path class="conn-path" d="M300 250 L468 60" /><path class="conn-path" d="M300 250 L558 175" /><path class="conn-path" d="M300 250 L570 325" /><path class="conn-path" d="M300 250 L492 440" /><path class="conn-path" d="M300 250 L300 475" /><path class="conn-path" d="M300 250 L108 440" /><path class="conn-path" d="M300 250 L30 325" /><path class="conn-path" d="M300 250 L42 175" /><path class="conn-path" d="M300 250 L132 60" />
           
           <!-- Sequential Journey Path (The Clock Effect) -->
-          <path class="journey-track" d="M300 250 L300 25 L468 60 L558 175 L570 325 L492 440 L300 475 L108 440 L30 325 L42 175 L132 60 Z" fill="none" stroke="rgba(7,7,7,0.03)" stroke-width="1.5" />
-          <path class="pulse-path" d="M300 250 L300 25 L468 60 L558 175 L570 325 L492 440 L300 475 L108 440 L30 325 L42 175 L132 60 Z" />
+          <path class="journey-track" d="M300 250 L300 25 L468 60 L558 175 L570 325 L492 440 L300 475 L108 440 L30 325 L42 175 L132 60 Z" fill="none" stroke="rgba(7,7,7,0.03)" stroke-width="1.5" pathLength="1000" />
+          <path class="pulse-path" d="M300 250 L300 25 L468 60 L558 175 L570 325 L492 440 L300 475 L108 440 L30 325 L42 175 L132 60 Z" pathLength="1000" />
         </svg>
         <div class="platform-core">
           <svg class="core-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 7v10l8 5 8-5V7l-8-5z" stroke="currentColor" stroke-width="2"/><path d="M12 22V12M20 7l-8 5-8-5" stroke="currentColor" stroke-width="2"/></svg>
