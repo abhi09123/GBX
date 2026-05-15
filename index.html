@@ -25,6 +25,14 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
     * { box-sizing: border-box; }
 
     body {
@@ -37,9 +45,11 @@
 
     /* THE GLOBAL SHELL */
     .site-shell {
-      position: relative;
-      max-width: 1720px;
+      width: 100%;
+      max-width: 1400px;
       margin: 0 auto;
+      position: relative;
+      overflow: hidden;
       border-left: 1px solid var(--line);
       border-right: 1px solid var(--line);
       min-height: 100vh;
@@ -1027,11 +1037,17 @@
 
     @media (max-width: 480px) {
       .hero-visual {
-        height: 300px;
-        transform: scale(0.55);
+        height: 320px;
+        transform: scale(0.48);
+        margin: -40px 0; /* Tighten space around scaled visual */
       }
-      .hero-copy h1 { font-size: 32px; }
-      .hero-copy p { font-size: 16px; }
+      .service-node {
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+      .hero-copy h1 { font-size: 28px; }
+      .hero-copy p { font-size: 15px; }
     }
   </style>
 </head>
