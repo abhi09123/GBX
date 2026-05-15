@@ -219,12 +219,16 @@
     }
 
     .hero-tagline {
-      font-size: 14px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--ink);
+      letter-spacing: 0.25em;
+      color: var(--success);
       margin-bottom: 24px;
-      font-weight: 600;
+      font-weight: 700;
+      background: rgba(67, 230, 23, 0.08);
+      padding: 6px 16px;
+      border-radius: 20px;
+      display: inline-block;
     }
 
     .hero-copy h1 span {
@@ -235,8 +239,17 @@
       max-width: 760px;
       margin: 28px auto 0;
       color: rgba(7, 7, 7, 0.62);
-      font-size: 20px;
-      line-height: 1.5;
+      font-size: 19px;
+      line-height: 1.6;
+    }
+
+    .hero-copy p .highlight {
+      display: block;
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
     }
 
     .hero .button-row {
@@ -337,18 +350,26 @@
       white-space: nowrap;
       z-index: 120;
       transform: translate(-50%, -50%); /* Center on coordinates */
+      transition: all 0.4s ease;
+      border: 1px solid transparent;
+      animation: nodePulse 10s infinite;
     }
 
-    .node-1 { top: 5%; left: 50%; }
-    .node-2 { top: 12%; left: 78%; }
-    .node-3 { top: 35%; left: 93%; }
-    .node-4 { top: 65%; left: 95%; }
-    .node-5 { top: 88%; left: 82%; }
-    .node-6 { top: 95%; left: 50%; }
-    .node-7 { top: 88%; left: 18%; }
-    .node-8 { top: 65%; left: 5%; }
-    .node-9 { top: 35%; left: 7%; }
-    .node-10 { top: 12%; left: 22%; }
+    @keyframes nodePulse {
+      0%, 8%, 100% { transform: translate(-50%, -50%) scale(1); border-color: transparent; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+      4% { transform: translate(-50%, -50%) scale(1.08); border-color: var(--success); box-shadow: 0 12px 30px rgba(67, 230, 23, 0.15); }
+    }
+
+    .node-1 { top: 5%; left: 50%; animation-delay: 1.0s; }
+    .node-2 { top: 12%; left: 78%; animation-delay: 1.8s; }
+    .node-3 { top: 35%; left: 93%; animation-delay: 2.6s; }
+    .node-4 { top: 65%; left: 95%; animation-delay: 3.4s; }
+    .node-5 { top: 88%; left: 82%; animation-delay: 4.2s; }
+    .node-6 { top: 95%; left: 50%; animation-delay: 5.0s; }
+    .node-7 { top: 88%; left: 18%; animation-delay: 5.8s; }
+    .node-8 { top: 65%; left: 5%; animation-delay: 6.6s; }
+    .node-9 { top: 35%; left: 7%; animation-delay: 7.4s; }
+    .node-10 { top: 12%; left: 22%; animation-delay: 8.2s; }
 
     .node-1 .check { background: #10b981; border-color: #10b981; } /* Emerald */
     .node-2 .check { background: #6366f1; border-color: #6366f1; } /* Indigo */
@@ -944,7 +965,7 @@
     <div class="hero-copy" data-reveal>
       <div class="hero-tagline">Where every penny counts!</div>
       <h1><span>One Platform</span> Connecting Customers, Brokers &amp; Investors</h1>
-      <p>A unified digital platform connecting brokers, legal teams, surveyors, servicing providers, receivers and investors, enabling faster transactions, operational efficiency, and real-time collaboration across the property finance lifecycle.</p>
+      <p><span class="highlight">Europe’s first, AI-native Integrated Lending Rail.</span>Experience seamless lending, from application to settlement for half the cost and double the efficiency.</p>
       <div class="button-row">
         <a class="btn primary" href="#demo">Book a Demo</a>
         <a class="btn" href="#journey">Explore</a>
@@ -963,7 +984,7 @@
         </svg>
         <div class="platform-core">
           <svg class="core-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 7v10l8 5 8-5V7l-8-5z" stroke="currentColor" stroke-width="2"/><path d="M12 22V12M20 7l-8 5-8-5" stroke="currentColor" stroke-width="2"/></svg>
-          <div class="core-label">Platform</div>
+          <div class="core-label">GBX</div>
         </div>
         <div class="service-node node-1"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Application</div>
         <div class="service-node node-2"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Underwriting</div>
