@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -232,8 +232,8 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      flex: 1;
-      max-width: 650px;
+      flex: 3;
+      max-width: 900px;
     }
 
     .hero-copy h1 {
@@ -274,18 +274,21 @@
 
     .hero-visual {
       position: relative;
-      width: 800px;
-      height: 700px;
+      flex: 0 0 580px;
+      width: 580px;
+      height: 510px;
       margin: 0;
-      flex-shrink: 0;
-      transform: scale(0.85);
-      transform-origin: center right;
+      overflow: hidden;
     }
 
     .connection-stage {
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 800px;
       height: 700px;
+      transform: scale(0.73);
+      transform-origin: top left;
       display: grid;
       place-items: center;
       isolation: isolate;
@@ -1039,7 +1042,7 @@
 
   <header class="hero">
     <div class="hero-copy" data-reveal>
-      <h1><span>Europe’s first,</span><br>AI-native Full Stack Lending Rail.</h1>
+      <h1><span>Europe’s first,</span> AI-native<br>Full Stack Lending Rail.</h1>
       <p>ORDN is an AI-native, full-stack lending rail infrastructure for whole loans, securitised credit, and refinancing.<br><br>We offer sourcing, underwriting and servicing, all in one integrated interface, making it seamless for Capital Partners and brokers.</p>
       <div class="button-row">
         <a class="btn primary" href="#demo">Book a Demo</a>
@@ -1075,7 +1078,7 @@
 
         </svg>
         <div class="platform-core">
-          <img src="WhiteBlack.jpg" alt="ORDN" style="width: 55%; height: 55%; object-fit: contain; border-radius: 50%;">
+          <img src="blue.png" alt="ORDN" style="width: 55%; height: 55%; object-fit: contain; border-radius: 50%;">
         </div>
         <div class="service-node node-1"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Application Sourcing</div>
         <div class="service-node node-2"><span class="check"><svg viewBox="0 0 24 24" fill="none"><path d="m7 12 3 3 7-7" stroke="currentColor" stroke-width="3"/></svg></span>Underwriting</div>
