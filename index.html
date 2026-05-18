@@ -224,13 +224,13 @@
 
     .hero-copy h1 {
       margin: 0;
-      font-size: clamp(48px, 6.2vw, 86px);
-      line-height: 0.96;
+      font-size: clamp(32px, 4vw, 56px);
+      line-height: 1.1;
       font-weight: 700;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.02em;
+      border-left: 3px solid var(--success);
+      padding-left: 24px;
     }
-
-
 
     .hero-copy h1 span {
       color: var(--success);
@@ -362,7 +362,7 @@
       border-color: var(--success) !important;
       box-shadow: 0 12px 30px rgba(0, 51, 255, 0.22), 0 0 0 3px rgba(0, 51, 255, 0.12) !important;
       transform: translate(-50%, -50%) scale(1.08) !important;
-      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease !important;
+      transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease !important;
     }
 
     /* Perfect circle: 10 nodes × 36° — R=290, centre=(400,350) in SVG 800×700 */
@@ -1022,7 +1022,7 @@
   <header class="hero">
     <div class="hero-copy" data-reveal>
       <h1><span>Europe’s first,</span><br>AI-native Full Stack Lending Rail.</h1>
-      <p>Experience seamless lending, from application to settlement for half the cost and double the efficiency.</p>
+      <p>ORDN is an AI-native, full-stack lending rail infrastructure for whole loans, securitised credit, and refinancing.<br><br>We offer sourcing, underwriting and servicing, all in one integrated interface, making it seamless for lenders and brokers.</p>
       <div class="button-row">
         <a class="btn primary" href="#demo">Book a Demo</a>
         <a class="btn" href="#journey">Explore</a>
@@ -1046,15 +1046,15 @@
           <!--
             Clock hand: a <g> that rotates around the SVG centre (400,350).
             Polygon relative to (0,0), translated to (400,350).
-            7 px wide at base, tapers to ~1.4 px at tip, 280 units long.
           -->
-          <g id="clock-hand-group" transform="rotate(0, 400, 350)">
+          <g id="clock-hand-group">
             <polygon points="-3.5,12 3.5,12 0.7,-280 -0.7,-280"
-                     transform="translate(400, 350)" />
+                     transform="translate(400, 350)" fill="#f4f4f5" />
             <polygon points="-2.5,12 2.5,12 0,30"
-                     transform="translate(400, 350)" />
-            <circle class="pivot" cx="400" cy="350" r="6" />
+                     transform="translate(400, 350)" fill="#f4f4f5" />
+            <circle class="pivot" cx="400" cy="350" r="6" fill="#f4f4f5" />
           </g>
+
         </svg>
         <div class="platform-core">
           <svg class="core-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 7v10l8 5 8-5V7l-8-5z" stroke="currentColor" stroke-width="2"/><path d="M12 22V12M20 7l-8 5-8-5" stroke="currentColor" stroke-width="2"/></svg>
@@ -1074,54 +1074,6 @@
     </div>
   </header>
 
-  <section class="page-section" id="journey">
-    <div class="dash-border"></div>
-    <div class="section-grid">
-      <div class="section-kicker-wrap">
-        <div class="section-label">System Architecture</div>
-        <div class="section-kicker" data-reveal>Journey</div>
-      </div>
-      <div>
-        <h2 class="section-heading" data-reveal>Built Around the Entire Lending Journey</h2>
-        <div class="video-container" id="journey-trigger">
-          <div class="loader-overlay" id="journey-loader">
-            <div style="font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;">Analyzing Infrastructure</div>
-            <div class="loader-bar"><div class="loader-progress" id="loader-fill"></div></div>
-          </div>
-          
-          <!-- Removed CSS grid to prevent overlap with video grid -->
-          <div class="scanline"></div>
-          
-          <!-- Animated Flux Lines -->
-          <div class="flux-line" style="top: 20%; left: -10%; animation-delay: 0s;"></div>
-          <div class="flux-line" style="top: 60%; left: -10%; animation-delay: 2s;"></div>
-          <div class="flux-line v" style="left: 30%; top: -10%; animation-delay: 1s;"></div>
-          <div class="flux-line v" style="left: 70%; top: -10%; animation-delay: 3s;"></div>
-
-          <div class="transformation-flash" id="trans-flash"></div>
-          
-          <div class="system-status">
-            <div class="status-pulse"></div>
-            Platform Active
-          </div>
-          
-          <div class="timeline-rail">
-            <div class="timeline-progress" id="progress-bar">
-              <div class="timeline-dot"></div>
-            </div>
-          </div>
-          
-          <div class="timeline-labels">
-            <span class="timeline-label" id="label-1">Manual Coordination</span>
-            <span class="timeline-label" id="label-2">Data Fragmented</span>
-            <span class="timeline-label" id="label-3">Operational Scale</span>
-          </div>
-
-          <video id="journey-video" src="Final.mp4" muted loop playsinline></video>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="page-section" id="features">
     <div class="dash-border"></div>
@@ -1285,69 +1237,6 @@
   </footer>
 
   <script>
-    // ─── Video Section ───────────────────────────────────────────────────
-    const video = document.getElementById('journey-video');
-    const trigger = document.getElementById('journey-trigger');
-    const loader = document.getElementById('journey-loader');
-    const loaderFill = document.getElementById('loader-fill');
-    const container = document.getElementById('journey-trigger');
-    const flash = document.getElementById('trans-flash');
-    const progressBar = document.getElementById('progress-bar');
-    const labels = [
-      document.getElementById('label-1'),
-      document.getElementById('label-2'),
-      document.getElementById('label-3')
-    ];
-    let hasTransformed = false;
-
-    video.addEventListener('loadeddata', () => {
-      loader.style.opacity = '0';
-      setTimeout(() => loader.remove(), 600);
-    });
-
-    function updateProgress() {
-      if (!video.paused && !video.ended) {
-        const transPoint = 0.62;
-        const actualVideoProgress = video.currentTime / video.duration;
-        const progress = Math.min(1, video.currentTime / (video.duration * transPoint));
-        if (actualVideoProgress >= transPoint && !hasTransformed) triggerWOW();
-        else if (actualVideoProgress < transPoint && hasTransformed) resetWOW();
-        progressBar.style.width = `${progress * 100}%`;
-        updateNarrative(progress);
-      }
-      requestAnimationFrame(updateProgress);
-    }
-    requestAnimationFrame(updateProgress);
-
-    function triggerWOW() {
-      hasTransformed = true;
-      container.classList.add('wow-mode');
-      flash.classList.add('active');
-      setTimeout(() => flash.classList.remove('active'), 800);
-      labels[0].innerText = "Unified Infrastructure";
-      labels[1].innerText = "System Intelligence";
-      labels[2].innerText = "Operational Scale";
-    }
-    function resetWOW() {
-      hasTransformed = false;
-      container.classList.remove('wow-mode');
-      labels[0].innerText = "Manual Coordination";
-      labels[1].innerText = "Data Fragmented";
-      labels[2].innerText = "Operational Scale";
-    }
-    function updateNarrative(progress) {
-      labels[0].classList.toggle('is-active', progress < 0.33);
-      labels[1].classList.toggle('is-active', progress >= 0.33 && progress < 0.66);
-      labels[2].classList.toggle('is-active', progress >= 0.66);
-    }
-
-    const playbackObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) video.play();
-        else video.pause();
-      });
-    }, { threshold: 0, rootMargin: "-35% 0px -35% 0px" });
-    playbackObserver.observe(video);
 
     // ─── Clock-Hand Animation ─────────────────────────────────────────────
     //
@@ -1368,40 +1257,36 @@
       { el: document.querySelector('.node-10'), angle: 324 },  // Securitisation
     ];
 
-    const CYCLE_MS        = 10000;   // one full revolution = 10 s
-    const HIGHLIGHT_WIN   = 16;      // ±degrees that triggers a node highlight
-    const HIGHLIGHT_LINGER = 450;    // ms the highlight stays after the hand passes
+    const CYCLE_MS = 10000;   // one full cycle = 10 s
+    const STEP_MS = CYCLE_MS / nodes.length; // time per node
+    let startTime = null;
+    const handGroup = document.getElementById('clock-hand-group');
 
-    const handGroup      = document.getElementById('clock-hand-group');
-    const highlightTimers = new Map();
-    let   startTime       = null;
-
-    function animateClock(ts) {
+    function animateNodes(ts) {
       if (!startTime) startTime = ts;
-      const deg = ((ts - startTime) % CYCLE_MS) / CYCLE_MS * 360;   // 0–360 CW
+      const elapsed = ts - startTime;
+      const activeIndex = Math.floor((elapsed % CYCLE_MS) / STEP_MS);
+      const stepProgress = (elapsed % STEP_MS) / STEP_MS;
 
-      // Rotate the whole hand group around SVG centre (300, 250)
-      handGroup.setAttribute('transform', `rotate(${deg}, 400, 350)`);
+      let handOpacity = 1;
+      if (stepProgress < 0.2) handOpacity = stepProgress / 0.2;
+      else if (stepProgress > 0.8) handOpacity = (1 - stepProgress) / 0.2;
 
-      // Highlight whichever node the hand is passing
-      for (const node of nodes) {
-        let diff = Math.abs(deg - node.angle);
-        if (diff > 180) diff = 360 - diff;   // wrap-around
-
-        if (diff < HIGHLIGHT_WIN) {
+      nodes.forEach((node, i) => {
+        if (i === activeIndex) {
           node.el.classList.add('node-active');
-          if (highlightTimers.has(node)) clearTimeout(highlightTimers.get(node));
-          highlightTimers.set(node, setTimeout(() => {
-            node.el.classList.remove('node-active');
-            highlightTimers.delete(node);
-          }, HIGHLIGHT_LINGER));
+          if (handGroup) {
+            handGroup.style.opacity = handOpacity;
+            handGroup.setAttribute('transform', `rotate(${node.angle}, 400, 350)`);
+          }
+        } else {
+          node.el.classList.remove('node-active');
         }
-      }
-
-      requestAnimationFrame(animateClock);
+      });
+      requestAnimationFrame(animateNodes);
     }
 
-    requestAnimationFrame(animateClock);
+    requestAnimationFrame(animateNodes);
 
     // ─── Scroll Reveal ────────────────────────────────────────────────────
     const revealObserver = new IntersectionObserver((entries) => {
